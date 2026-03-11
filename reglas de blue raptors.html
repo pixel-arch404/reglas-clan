@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reglas del Servidor - Terminal</title>
+    <style>
+        body {
+            background-color: #050505;
+            color: #00ff00;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .terminal {
+            width: 100%;
+            max-width: 750px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .user { color: #ff5555; font-weight: bold; }
+        .host { color: #5555ff; font-weight: bold; }
+        .dir { color: #ffffff; }
+        .numero { color: #55ffff; }
+        .importante { color: #ffaa00; font-weight: bold; }
+        
+        /* Estilo para los créditos */
+        .creditos { color: #aaaaaa; }
+        .autor { color: #ff77ff; font-weight: bold; } /* Magenta para los nombres */
+
+        h1 {
+            font-size: 18px;
+            text-decoration: underline;
+            text-transform: uppercase;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .regla {
+            margin-bottom: 8px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background-color: #00ff00;
+            vertical-align: middle;
+            animation: parpadeo 1s step-end infinite;
+        }
+
+        @keyframes parpadeo {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="terminal" id="pantalla">
+        <div>
+            <span class="user">admin</span>@<span class="host">servidor</span>:<span class="dir">~</span>$ <span id="comando"></span><span id="cursor-principal" class="cursor"></span>
+        </div>
+    </div>
+
+    <script>
+        const comandoTexto = "cat reglas.txt";
+        
+        // Aquí están las reglas y al final los créditos agregados
+        const lineasReglas = [
+            "<h1>=== Reglas del Servidor ===</h1>",
+            "<div class='regla'><span class='numero'>[01]</span> Leerse las reglas.</div>",
+            "<div class='regla'><span class='numero'>[02]</span> No insultar.</div>",
+            "<div class='regla'><span class='numero'>[03]</span> Caer bien.</div>",
+            "<div class='regla'><span class='numero'>[04]</span> Ser bueno con los demás.</div>",
+            "<div class='regla'><span class='numero'>[05]</span> Ponerte en el lugar de los demás cuando haces algo.</div>",
+            "<div class='regla'><span class='numero'>[06]</span> No robar.</div>",
+            "<div class='regla'><span class='numero'>[07]</span> Atender a la mayoría de las reuniones.</div>",
+            "<div class='regla'><span class='numero'>[08]</span> No gritar en llamadas.</div>",
+            "<div class='regla'><span class='numero'>[09]</span> No hacer spam.</div>",
+            "<div class='regla'><span class='numero'>[10]</span> Avisar de cada cosa.</div>",
+            "<div class='regla importante'><span class='numero'>[11]</span> No matar a nadie del grupo (a menos que te haya matado, pero con /back).</div>",
+            "<div class='regla'><span class='numero'>[12]</span> Tener disciplina.</div>",
+            "<br>",
+            "<div class='creditos'>--------------------------------------------------</div>",
+            "<div class='creditos'>[+] Código por: <span class='autor'>Pixel</span></div>",
+            "<div class='creditos'>[+] Hecho por: <span class='autor'>Pixel</span> (Owner del clan) y <span class='autor'>Juanjo</span> (Segundo owner del clan)</div>",
+            "<div class='creditos'>--------------------------------------------------</div>",
+            "<br><div><span class='user'>admin</span>@<span class='host'>servidor</span>:<span class='dir'>~</span>$ <span class='cursor'></span></div>"
+        ];
+
+        const elComando = document.getElementById("comando");
+        const elCursor = document.getElementById("cursor-principal");
+        const pantalla = document.getElementById("pantalla");
+
+        let indexLetra = 0;
+        let indexLinea = 0;
+
+        function escribirComando() {
+            if (indexLetra < comandoTexto.length) {
+                elComando.innerHTML += comandoTexto.charAt(indexLetra);
+                indexLetra++;
+                setTimeout(escribirComando, 60);
+            } else {
+                elCursor.style.display = 'none';
+                setTimeout(mostrarReglas, 400); 
+            }
+        }
+
+        function mostrarReglas() {
+            if (indexLinea < lineasReglas.length) {
+                pantalla.innerHTML += lineasReglas[indexLinea];
+                indexLinea++;
+                setTimeout(mostrarReglas, 40); 
+            }
+        }
+
+        setTimeout(escribirComando, 500);
+
+    </script>
+</body>
+</html>
